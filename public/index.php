@@ -5,13 +5,13 @@ use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\ResponseEmitter;
-use Synatix\DocxConverterApi\Convert\Builder\ConverterBuilder;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 if (!defined('APP_ENV')) {
     define('APP_ENV', getenv('APP_ENV'));
 }
+
 
 $containerBuilder = new ContainerBuilder();
 
