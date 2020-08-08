@@ -22,6 +22,7 @@ class ListServicesCommand
                 continue;
             }
 
+            // Parse all columns and filter whitespaces
             $columns = explode(' ', $outputLine);
             $columns = array_filter($columns, fn(string $column) => !empty($column));
             $columns = array_values($columns);
@@ -30,6 +31,8 @@ class ListServicesCommand
             if (strpos($serviceName, '.service') === false) {
                 continue;
             }
+
+            $serviceName = str_replace('.service', '', $serviceName);
 
             $description = '';
             $count = count($columns);
