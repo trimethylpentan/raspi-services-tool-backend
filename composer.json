@@ -1,0 +1,21 @@
+{
+    "name": "trimethylpentan/raspi-services-tool-backend",
+    "description": "A backend-API for managing your services on a raspi via web",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "7.4.*",
+        "slim/slim": "^4.5",
+        "php-di/php-di": "^6.2",
+        "filp/whoops": "^2.7",
+        "middlewares/whoops": "^2.0",
+        "slim/http": "^1.0",
+        "slim/psr7": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Trimethylpentan\\RaspiServicesToolBackend\\": "src/"
+        }
+    }
+}
