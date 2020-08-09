@@ -23,8 +23,8 @@ class ServicesListHandler implements HandlerInterface
     {
         $services = $this->servicesCommand->getAllServices();
 
-        $response->withStatus(200);
         /** @var Response $response */
+        $response->withStatus(200);
         return $response->withJson([
                 'status' => 200,
                 'services' => $services

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Trimethylpentan\RaspiServicesToolBackend\Services\Command;
 
+use Trimethylpentan\RaspiServicesToolBackend\Common\Exception\ValueException;
 use Trimethylpentan\RaspiServicesToolBackend\Services\Collection\ServiceCollection;
 use Trimethylpentan\RaspiServicesToolBackend\Services\DataObject\Service;
 use Trimethylpentan\RaspiServicesToolBackend\Services\DataObject\Status;
@@ -13,6 +14,25 @@ class ListServicesCommand
     public function getAllServices(): ServiceCollection
     {
         $output = shell_exec('systemctl --type=service');
+        return $this->parseOutput($output);
+    }
+
+    public function listService(string $serviceName): Service
+    {
+        $output = shell_exec(sprintf('systemctl list-units %s.service', $serviceName));
+        $services = $this->parseOutput($output);
+
+        $servicesArray = iterator_to_array($services);
+        $service = array_shift($servicesArray);
+        if (!$service) {
+            throw new ValueException('Could not find service with name ' . $serviceName);
+        }
+
+        return $service;
+    }
+
+    private function parseOutput(string $output): ServiceCollection
+    {
         $splitOutput = explode("\n", $output);
         $services = ServiceCollection::createEmpty();
 
@@ -26,7 +46,7 @@ class ListServicesCommand
             $columns = explode(' ', $outputLine);
             $columns = array_filter($columns, fn(string $column) => !empty($column));
             $columns = array_values($columns);
-            [$serviceName, , ,$status] = $columns;
+            [$serviceName, , , $status] = $columns;
 
             if (strpos($serviceName, '.service') === false) {
                 continue;
@@ -43,14 +63,16 @@ class ListServicesCommand
             $description = trim($description, ' ');
 
             switch ($status) {
-                case 'running': $services->addService(Service::create($serviceName, $description, Status::create(Status::RUNNING)));
-                break;
-                case 'exited': $services->addService(Service::create($serviceName, $description, Status::create(Status::STOPPED)));
-                break;
-                default: $services->addService(Service::create($serviceName, $description, Status::create(Status::UNKNOWN)));
+                case 'running':
+                    $services->addService(Service::create($serviceName, $description, Status::create(Status::RUNNING)));
+                    break;
+                case 'exited':
+                    $services->addService(Service::create($serviceName, $description, Status::create(Status::STOPPED)));
+                    break;
+                default:
+                    $services->addService(Service::create($serviceName, $description, Status::create(Status::UNKNOWN)));
             }
         }
-
         return $services;
     }
 }
