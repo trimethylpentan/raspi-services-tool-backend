@@ -13,13 +13,13 @@ class ListServicesCommand
 {
     public function getAllServices(): ServiceCollection
     {
-        $output = shell_exec('systemctl --type=service');
+        $output = shell_exec('systemctl --type=service -a');
         return $this->parseOutput($output);
     }
 
     public function listService(string $serviceName): Service
     {
-        $output = shell_exec(sprintf('systemctl list-units %s.service', $serviceName));
+        $output = shell_exec(sprintf('systemctl list-units -a %s.service', $serviceName));
         $services = $this->parseOutput($output);
 
         $servicesArray = iterator_to_array($services);
@@ -66,6 +66,7 @@ class ListServicesCommand
                 case 'running':
                     $services->addService(Service::create($serviceName, $description, Status::create(Status::RUNNING)));
                     break;
+                case 'dead':
                 case 'exited':
                     $services->addService(Service::create($serviceName, $description, Status::create(Status::STOPPED)));
                     break;
