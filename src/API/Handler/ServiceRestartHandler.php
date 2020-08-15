@@ -11,15 +11,15 @@ use Slim\Http\ServerRequest;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Exception\ServiceException;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Exception\ValueException;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Handler\HandlerInterface;
-use Trimethylpentan\RaspiServicesToolBackend\Services\Command\StartServiceCommand;
+use Trimethylpentan\RaspiServicesToolBackend\Services\Command\RestartServiceCommand;
 
-class ServiceStartHandler implements HandlerInterface
+class ServiceRestartHandler implements HandlerInterface
 {
-    private StartServiceCommand $startServiceCommand;
+    private RestartServiceCommand $restartServiceCommand;
 
-    public function __construct(StartServiceCommand $startServiceCommand)
+    public function __construct(RestartServiceCommand $restartServiceCommand)
     {
-        $this->startServiceCommand = $startServiceCommand;
+        $this->restartServiceCommand = $restartServiceCommand;
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, array $params): ResponseInterface
@@ -30,7 +30,7 @@ class ServiceStartHandler implements HandlerInterface
             json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
         try {
-            $service = $this->startServiceCommand->startService($serviceName, $password);
+            $service = $this->restartServiceCommand->restartService($serviceName, $password);
             /** @var Response $response */
             return $response->withStatus(200)
                 ->withJson([
