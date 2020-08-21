@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  mariadb:
+    build:
+      context: .
+      dockerfile: docker/mariadb/Dockerfile
+    ports:
+      - 13306:3306
+    restart: always
+    volumes:
+      - mariadb-data:/var/lib/mysql:rw
+#      - ./docker/mariadb/sql:/docker-entrypoint-initdb.d:r
+    env_file:
+      - docker/mariadb/mariadb-variables.env
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - docker/phpmyadmin/phpmyadmin-vars.env
+    ports:
+      - 8080:80
+
+  redis:
+    image: redis:6.0-alpine
+    ports:
+      - 16379:6379
+    restart: always
+    volumes:
+    - redis-data:/data:rw
+
+volumes:
+  mariadb-data:
+  redis-data:

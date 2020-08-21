@@ -7,6 +7,7 @@ use Trimethylpentan\RaspiServicesToolBackend\API\Handler\ServiceRestartHandler;
 use Trimethylpentan\RaspiServicesToolBackend\API\Handler\ServicesListHandler;
 use Trimethylpentan\RaspiServicesToolBackend\API\Handler\ServiceStartHandler;
 use Trimethylpentan\RaspiServicesToolBackend\API\Handler\ServiceStopHandler;
+use Trimethylpentan\RaspiServicesToolBackend\Users\Handler\LoginHandler;
 
 return static function (App $app) {
     $app->group('/api', function (Group $group) {
@@ -16,5 +17,8 @@ return static function (App $app) {
             $group->post('/stop', ServiceStopHandler::class);
             $group->post('/restart', ServiceRestartHandler::class);
         });
+    });
+    $app->group('/users', function (Group $group) {
+        $group->post('/login', LoginHandler::class);
     });
 };
