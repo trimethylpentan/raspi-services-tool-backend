@@ -16,8 +16,6 @@ class PdoFactory
             sprintf('mysql:host=%s:%s;dbname=%s', $config['host'], $config['port'], $config['database']),
             $config['user'],
             $config['password']
-//            'root',
-//            'DpuGth+ckmV&mS2y'
         );
 
         return $pdo;
