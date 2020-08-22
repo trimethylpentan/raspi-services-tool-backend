@@ -10,11 +10,11 @@ return function (ContainerBuilder $containerBuilder) {
         'settings' => [
             'displayErrorDetails' => APP_ENV === 'testing',
             'redis' => [
-                'host' => 'localhost',
-                'port' => 13679
+                'host' => '127.0.0.1',
+                'port' => 16379
             ],
             'mariadb' => [
-                'host'     => 'localhost',
+                'host'     => '127.0.0.1',
                 'port'     => 13306,
                 'database' => 'raspi_services_tool',
                 'user' => $mariadbCredentials['user'],

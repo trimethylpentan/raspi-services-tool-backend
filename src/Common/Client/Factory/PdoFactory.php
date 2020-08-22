@@ -13,9 +13,11 @@ class PdoFactory
     {
         $config = $container->get('settings')['mariadb'];
         $pdo = new PDO(
-            sprintf('mysql:host=%s;dbname=%s', $config['host'], $config['database']),
+            sprintf('mysql:host=%s:%s;dbname=%s', $config['host'], $config['port'], $config['database']),
             $config['user'],
             $config['password']
+//            'root',
+//            'DpuGth+ckmV&mS2y'
         );
 
         return $pdo;

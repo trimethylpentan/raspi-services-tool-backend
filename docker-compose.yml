@@ -29,6 +29,10 @@ services:
     volumes:
     - redis-data:/data:rw
 
+networks:
+  default:
+    driver: bridge
+
 volumes:
   mariadb-data:
   redis-data:

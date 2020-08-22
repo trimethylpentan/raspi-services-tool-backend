@@ -17,9 +17,16 @@ class ListServicesCommand
         return $this->parseOutput($output);
     }
 
+    /**
+     * @throws ValueException
+     */
     public function listService(string $serviceName): Service
     {
         $output = shell_exec(sprintf('systemctl list-units -a %s.service', $serviceName));
+
+        if (strpos($output, '0 loaded units listed') !== false) {
+            throw new ValueException('Could not find service with name ' . $serviceName);
+        }
         $services = $this->parseOutput($output);
 
         $servicesArray = iterator_to_array($services);
