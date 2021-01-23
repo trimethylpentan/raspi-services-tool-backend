@@ -19,6 +19,9 @@ return function (ContainerBuilder $containerBuilder) {
                 'database' => 'raspi_services_tool',
                 'user' => $mariadbCredentials['user'],
                 'password' => $mariadbCredentials['password'],
+            ],
+            'protectedRoutes' => [
+                '/api/.*'
             ]
         ],
     ]);

@@ -12,12 +12,10 @@ class PdoFactory
     public function __invoke(ContainerInterface $container): PDO
     {
         $config = $container->get('settings')['mariadb'];
-        $pdo = new PDO(
+        return new PDO(
             sprintf('mysql:host=%s:%s;dbname=%s', $config['host'], $config['port'], $config['database']),
             $config['user'],
             $config['password']
         );
-
-        return $pdo;
     }
 }
