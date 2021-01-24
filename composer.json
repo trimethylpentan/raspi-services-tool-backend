@@ -15,7 +15,11 @@
         "middlewares/whoops": "^2.0",
         "slim/http": "^1.0",
         "slim/psr7": "^1.1",
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "cboden/ratchet": "^0.4.3",
+        "react/event-loop": "^1.1",
+        "ocramius/proxy-manager": "^2.11",
+        "doctrine/annotations": "^1.11"
     },
     "autoload": {
         "psr-4": {

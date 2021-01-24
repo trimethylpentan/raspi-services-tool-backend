@@ -2,6 +2,8 @@
 declare(strict_types=1);
 
 use DI\ContainerBuilder;
+use React\EventLoop\Factory;
+use React\EventLoop\LoopInterface;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Client\Factory\PdoFactory;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Client\Factory\RedisClientFactory;
 use Trimethylpentan\RaspiServicesToolBackend\Common\Middleware\AuthenticationMiddleware;
@@ -13,6 +15,8 @@ return function (ContainerBuilder $containerBuilder) {
         Redis::class => factory(RedisClientFactory::class),
         PDO::class   => factory(PdoFactory::class),
 
-        AuthenticationMiddleware::class => factory(AuthenticationMiddlewareFactory::class)
+        LoopInterface::class => factory(fn() => Factory::create()),
+
+        AuthenticationMiddleware::class => factory(AuthenticationMiddlewareFactory::class),
     ]);
 };
