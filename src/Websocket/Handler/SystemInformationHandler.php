@@ -24,7 +24,7 @@ class SystemInformationHandler implements MessageComponentInterface
     {
         $this->clients = new SplObjectStorage();
         $this->loop = $loop;
-        $this->loop->addPeriodicTimer(2, [$this, 'onLoop']);
+//        $this->loop->addPeriodicTimer(2, [$this, 'onLoop']);
 
     }
 
